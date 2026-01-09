@@ -1,0 +1,434 @@
+*{
+	margin:0px;
+	padding:0px;
+}
+/*navbar design starts here*/
+.container1 {
+	margin-left: 20px;
+}
+
+.container2 {
+	margin-left: 430px;
+}
+
+.logo {
+	height: 45px;
+	border-radius: 100px;
+	margin-right: 20px;
+}
+
+		.menu1 {
+	
+	text-decoration: none;
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 2px;
+	box-shadow: 0px 0px 4px 1px white;
+	margin: 10px;
+
+}
+.menu1:hover
+{
+	background-color:white;
+	color:black !important;
+}
+
+.menu2 {
+	
+	text-decoration: none;
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 2px;
+	box-shadow: 0px 0px 4px 1px white;
+	margin: 10px;
+	background-color:#343A40;
+	color:white !important;
+}
+.menu2:hover
+{
+	background-color:white;
+	color:black !important;
+}
+
+.bg-dark {
+    background-color: #343a40!important;
+}
+/*navbar design ends here*/
+
+/*scrolling images design starts here*/
+
+.scrolldesign
+{
+	
+}
+.carousel-caption {
+	position: absolute;
+	right: 15%;
+	top: 5%;
+	left: 15%;
+	z-index: 10;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #fff;
+	text-align: center;
+	font-family: Cambria;
+
+}
+.tales
+{
+	width:100%;
+}
+.carousel-inner
+{
+	max-height:500px;
+}
+/*scrolling images design ends here*/
+
+/*Search bar starts */
+.search-bar
+{
+	padding:40px;
+	background-color:#021A33;
+}
+.search-input
+{
+	font-weight:bold;
+	color:black;
+}
+.search-btn
+{
+	padding:5px;
+	padding-right:10px;
+	padding-left:10px;
+	background-color:#2D3237;
+	color:white;
+	font-weight:bold;
+}
+
+/*Search bar ends */
+
+
+/*Category starts*/
+
+.cat-item {
+    display: block;
+    border: 1px solid grey;
+    transition: .5s;
+}
+
+.cat-item:hover {
+    border-color: rgba(0, 0, 0, .08);
+    box-shadow: none;
+}
+
+
+/*Category ends*/
+
+/*login page starts here*/
+
+.logo_box
+{
+	width:380px;
+	height:550px;
+	margin-bottom:50px;
+	box-sizing:border-box;
+	background-color:white;
+	padding:0px 30px;
+	text-align:center;
+	border:2px solid black;
+	border-radius:55px 0px 55px 0px ;
+	margin:auto;
+	background-image:linear-gradient(to bottom right,#4da6ff,#cce6ff,white);
+		
+}
+.img_set
+{
+	height:120px;
+	width:120px;
+	border-radius:50%;
+}
+
+
+.login_container {
+	margin-top: 30px;
+	font-weight: bold;
+	font-family: arial;
+}
+
+.btn_desi {
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: 2px solid white;
+	border-radius: 25px;
+	background-color: black;
+	color: white;
+	font-size: 18px;
+	margin-top: 25px;
+}
+
+.btn_desi:hover {
+	border: 2px solid black;
+	border-radius: 25px;
+	background-color: #00334d;
+	font-size: 15px;
+}
+
+
+
+.form {
+	position: relative;
+	margin: 20px;
+}
+
+.textbox {
+	outline: none;
+	background: none;
+	color: black;
+	padding: 12px;
+	border: none;
+	width: 90%;
+	border-bottom: 2px solid black;
+	font-size: 18px;
+
+}
+
+.form-label {
+	font-size: 20px;
+	font-weight: bolder;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	position: absolute;
+	top: 0.10rem;
+	left: 1.4rem;
+	cursor: text;
+	transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+	color: black;
+}
+
+.textbox:focus {
+	border-bottom: 1px solid black;
+	background: none;
+	font-size: 20px;
+}
+
+.textbox:focus~.form-label,
+.textbox:not(:placeholder-shown).textbox:not(:focus)~.form-label {
+	top: -0.5rem;
+	left: 1.4rem;
+	font-size: 20px;
+	font-weight: bolder;
+	background-image: linear-gradient(to bottom right, #4da6ff);
+	margin: -3px;
+
+}
+
+/*login page ends here*/
+
+/*about-us page starts here*/
+.about-us-bg {
+	background-image: linear-gradient(to bottom right, white, #cce6ff, #4da6ff);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.about-us {
+	margin-top: 50px;
+	margin-right: 300px;
+	margin-left: 300px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.au {
+	font-family: verdana;
+	text-align: center;
+	width: 400px;
+	border: 1px solid black;
+	border-radius: 55px 0px 55px 0px;
+	background-color: #24426D;
+	color: white;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.info {
+	margin-top: 25px;
+	font-size: 20px;
+}
+
+.team {
+	margin-top: 50px;
+	margin-left: 200px;
+	display: inline-block;
+	border-radius: 10px;
+	width: 400px;
+	height: 200px;
+	background-color: white;
+	padding: 20px;
+}
+
+.t-m {
+	font-family: verdana;
+	text-align: center;
+	width: 350px;
+	border: 1px solid black;
+	border-radius: 0px 55px 0px 55px;
+	background-color: #24426D;
+	color: white;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.t-names {
+	margin-top: 20px;
+	font-size: 20px;
+}
+
+.au-design {
+	display: inline-block;
+
+}
+
+/*about-us page ends here*/
+
+/*registration starts here*/
+*
+{
+	box-sizing:border-box;
+	font-family:'Poppins',sans-serif;
+}
+.regbackground
+{
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.form_container
+{
+	width:600px;
+	border:1px solid #EFEFEF;
+	margin:auto;
+	margin-top:50px;
+	padding:40px;
+	box-shadow:0px 0px 5px 2px #71b7e6;
+    background:linear-gradient(to bottom right,#4da6ff,#cce6ff,white);
+	opacity:0.9;
+	border-radius:30px 0px 30px 0px;
+}
+.input_box
+{
+	margin-bottom:15px;
+	height:35px;
+	text-align:left;
+	padding:10px;
+	width:500px;
+	border-radius:5px;
+	border:1px solid #71b7e6;
+	font-size:13px;
+}
+.input_box:hover
+{
+	border:2px solid black;
+	box-shadow:1px 1px 4px 1px ;
+}
+.button
+{
+	color:white;
+	border:1px solid black;
+	border-radius:5px;
+	width:100px;
+	height:50px;
+	font-size:20px;
+	padding:10px;
+	background-color:#71b7e6;
+}
+.button:hover
+{
+	background-color:#00000033;
+	color:black;
+	box-shadow:0px 0px 5px 2px skyblue;
+}
+/*registration ends here*/
+
+/*manually responsive starts*/
+@media only screen and (max-width:600px) {
+	.about-us {
+		margin-top: 50px;
+		margin-right: 50px;
+		margin-left: 50px;
+		padding: 20px;
+		background-color: white;
+		border-radius: 10px;
+	}
+
+	.au {
+		font-family: verdana;
+		text-align: center;
+		width: 200px;
+		border: 1px solid black;
+		border-radius: 55px 0px 55px 0px;
+		background-color: #24426D;
+		color: white;
+		font-weight: bold;
+		font-size: 30px;
+	}
+
+	.info {
+		margin-top: 25px;
+		font-size: 15px;
+	}
+
+	.team {
+		margin-top: 50px;
+		margin-left: 20px;
+		display: inline-block;
+		border-radius: 10px;
+		width: 250px;
+		height: 170px;
+		background-color: white;
+		padding: 20px;
+	}
+
+	.t-m {
+		font-family: verdana;
+		text-align: center;
+		width: 220px;
+		border: 1px solid black;
+		border-radius: 0px 55px 0px 55px;
+		background-color: #24426D;
+		color: white;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	.t-names {
+		margin-top: 20px;
+		font-size: 15px;
+	}
+
+	.au-design {
+		display: inline-block;
+
+
+	}
+
+	.imgh {
+		height: 180px;
+	}
+	
+    
+}
+/*manually responsive ends*/
+
+
+/*footer starts*/
+
+.footer_desi
+    {
+      background-color: black;
+      margin-top:60px;
+      color:white;
+	  bottom:0px;
+    }
+/*footer ends*/
