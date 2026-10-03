@@ -7,7 +7,14 @@ class class_functions
 	function __construct()
 	{
 		//database connectivity
-		$this->con=new mysqli("localhost","root","","local_city_job");
+		$host = getenv('DB_HOST');
+$port = getenv('DB_PORT');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASSWORD');
+$db   = getenv('DB_NAME');
+
+$this->con = mysqli_init();
+$this->con->real_connect($host, $user, $pass, $db, (int)$port);
 	}
 	
 	function create_user_account($full_name,$email_id,$mobile_no,$dob,$gender,$country,$state,$city,$password)
