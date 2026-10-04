@@ -19,11 +19,11 @@ if(isset($_POST['reset_btn']))
     {
         if($fcall->reset_password($email_id, $mobile_no, $new_password))
         {
-            $flag = 2;
+            $flag = 3;
         }
         else
         {
-            $flag = 3;
+            $flag = 2;
         }
     }
 }
@@ -37,6 +37,7 @@ if(isset($_POST['reset_btn']))
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="static/css/style.css">
 
     <link rel="stylesheet"
@@ -48,19 +49,122 @@ if(isset($_POST['reset_btn']))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-            crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-            crossorigin="anonymous"></script>
-
     <title>Forgot Password</title>
+
+    <style>
+        .forgot_box {
+            width: 420px;
+            min-height: auto;
+            padding: 25px 30px;
+            margin-top: 45px;
+            text-align: center;
+        }
+
+        .forgot_box h2 {
+            margin-bottom: 18px;
+            font-weight: bold;
+        }
+
+        .forgot_box .img_set {
+            width: 105px;
+            height: 105px;
+            margin-bottom: 18px;
+        }
+
+        .success_box {
+            background: #dff3e4;
+            border: 1px solid #b8dfc2;
+            border-radius: 10px;
+            padding: 18px 15px;
+            margin-bottom: 22px;
+        }
+
+        .success_icon {
+            display: block;
+            font-size: 35px;
+            color: #198754;
+            margin-bottom: 8px;
+        }
+
+        .success_box h5 {
+            margin: 5px 0;
+            font-weight: 600;
+            color: #155724;
+        }
+
+        .success_box p {
+            margin: 5px 0 15px;
+            color: #3d6145;
+            font-size: 14px;
+        }
+
+        .login_btn {
+            display: inline-block;
+            padding: 9px 22px;
+            background: #0d6efd;
+            color: white !important;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login_btn:hover {
+            background: #0b5ed7;
+            text-decoration: none;
+        }
+
+        .bottom_links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .bottom_link {
+            color: #0066cc;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .bottom_link:hover {
+            color: #004c99;
+        }
+
+        .success_page {
+            width: 420px;
+            padding: 28px 32px 25px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .success_page h2 {
+            margin-bottom: 18px;
+            font-weight: bold;
+        }
+
+        .success_page .img_set {
+            width: 105px;
+            height: 105px;
+            margin-bottom: 18px;
+        }
+
+        @media(max-width: 500px)
+        {
+            .forgot_box,
+            .success_page {
+                width: 90%;
+                padding: 25px 20px;
+            }
+
+            .bottom_links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
 </head>
 
-<body style="background-image:url('static/images/regbg2.jpg');"
+<body style="background-image: url('static/images/regbg2.jpg');"
       class="regbackground">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -107,11 +211,33 @@ if(isset($_POST['reset_btn']))
                 </a>
             </li>
 
-            <li class="nav-item active">
-                <a class="nav-link menu1" href="jobdetails.php">
-                    Jobs
-                </a>
-            </li>
+            <form action="jobdetails.php"
+                  method="POST"
+                  id="searchform">
+
+                <li class="nav-item active">
+
+                    <input type="submit"
+                           value="Jobs"
+                           form="searchform"
+                           name="search_btn"
+                           class="nav-link menu2"/>
+
+                    <input type="hidden"
+                           value="Country"
+                           name="country">
+
+                    <input type="hidden"
+                           value="State"
+                           name="state">
+
+                    <input type="hidden"
+                           value="City"
+                           name="city">
+
+                </li>
+
+            </form>
 
         </ul>
 
@@ -134,48 +260,86 @@ if(isset($_POST['reset_btn']))
     </div>
 </nav>
 
+<?php if($flag == 3) : ?>
 
-<div class="logo_box" style="margin-top:50px;">
+    <!-- SUCCESS PAGE -->
 
-    <h2 style="margin-bottom:15px; font-weight:bold;">
-        Forgot Password
-    </h2>
+    <div class="logo_box success_page">
 
-    <img src="static/images/profile.png" class="img_set"/>
+        <h2>
+            Password Reset
+        </h2>
 
+        <img src="static/images/profile.png"
+             class="img_set"
+             alt="Profile">
 
-    <?php if($flag == 1): ?>
+        <div class="success_box">
 
-        <div class="alert alert-danger">
-            New password and confirm password do not match.
+            <i class="bi bi-check-circle-fill success_icon"></i>
+
+            <h5>
+                Password Reset Successfully!
+            </h5>
+
+            <p>
+                Your password has been updated successfully.
+            </p>
+
+            <a href="login.php" class="login_btn">
+                Click here to Login
+            </a>
+
         </div>
 
-    <?php endif; ?>
+        <div class="bottom_links">
 
+            <a href="login.php"
+               class="bottom_link">
+                ← Back to Login
+            </a>
 
-    <?php if($flag == 2): ?>
+            <a href="registration.php"
+               class="bottom_link">
+                Create account →
+            </a>
 
-        <div class="alert alert-success">
-            Password reset successfully.
-            <br>
-            <a href="login.php">Click here to Login</a>
         </div>
 
-    <?php endif; ?>
+    </div>
 
+<?php else : ?>
 
-    <?php if($flag == 3): ?>
+    <!-- FORGOT PASSWORD FORM -->
 
-        <div class="alert alert-danger">
-            Email ID and Mobile Number do not match our records.
-        </div>
+    <div class="logo_box forgot_box">
 
-    <?php endif; ?>
+        <h2>
+            Forgot Password
+        </h2>
 
+        <img src="static/images/profile.png"
+             class="img_set"
+             alt="Profile">
 
-    <?php if($flag != 2): ?>
+        <?php if($flag == 1) : ?>
 
-        <form action="forgot_pass.php" method="post">
+            <div class="alert alert-danger">
+                Password and Confirm Password do not match.
+            </div>
+
+        <?php endif; ?>
+
+        <?php if($flag == 2) : ?>
+
+            <div class="alert alert-danger">
+                Email or Mobile Number is incorrect.
+            </div>
+
+        <?php endif; ?>
+
+        <form action="forgot_pass.php"
+              method="post">
 
             <div class="form">
 
@@ -191,7 +355,6 @@ if(isset($_POST['reset_btn']))
 
             </div>
 
-
             <div class="form">
 
                 <input type="text"
@@ -205,7 +368,6 @@ if(isset($_POST['reset_btn']))
                 </label>
 
             </div>
-
 
             <div class="form">
 
@@ -221,7 +383,6 @@ if(isset($_POST['reset_btn']))
 
             </div>
 
-
             <div class="form">
 
                 <input type="password"
@@ -236,38 +397,39 @@ if(isset($_POST['reset_btn']))
 
             </div>
 
-
-            <div class="form">
-
-                <input type="submit"
-                       value="RESET PASSWORD"
-                       class="btn_desi"
-                       name="reset_btn">
-
-            </div>
+            <input type="submit"
+                   value="Reset Password"
+                   class="btn_desi"
+                   name="reset_btn">
 
         </form>
 
-    <?php endif; ?>
+        <div class="bottom_links">
 
-
-    <div class="login_container">
-
-        <span>
-            <a href="login.php" style="float:left;">
-                Back to Login
+            <a href="login.php"
+               class="bottom_link">
+                ← Back to Login
             </a>
-        </span>
 
-        <span>
-            <a href="registration.php" style="float:right;">
-                Create account
+            <a href="registration.php"
+               class="bottom_link">
+                Create account →
             </a>
-        </span>
+
+        </div>
 
     </div>
 
-</div>
+<?php endif; ?>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
