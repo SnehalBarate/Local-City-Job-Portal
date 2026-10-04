@@ -66,7 +66,7 @@
       <ul class="navbar-nav ms-auto">
         <?php if(!isset($_SESSION['username'])) : ?>
       <li class="nav-item active">
-                <a class="nav-link menu1" href="login.php">Login</a>
+                
               </li>
               <li class="nav-item active">
                 <a class="nav-link menu1" href="registration.php">Register</a>
