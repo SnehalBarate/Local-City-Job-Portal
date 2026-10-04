@@ -2,17 +2,25 @@
   require_once('static/lib/functions.php');
   $fcall = new class_functions();
 
-  // Logout
+  /* =========================
+     LOGOUT
+     ========================= */
+
   if(isset($_GET['logout']))
   {
-    unset($_SESSION['logged_in']);
+    session_destroy();
+
     header("location:login.php");
     exit();
   }
 
   $flag = 0;
 
-  // Login
+
+  /* =========================
+     LOGIN
+     ========================= */
+
   if(isset($_POST['submit_btn']))
   {
     $var_email_id = $_POST['email_id'];
@@ -30,8 +38,10 @@
       {
         $flag = 3;
 
-        // Store only login status.
-        // Mobile number is NOT stored in session.
+        /*
+         * ONLY LOGIN STATUS IS STORED.
+         * Username/mobile number is NOT stored.
+         */
         $_SESSION['logged_in'] = true;
 
         header("location:index.php");
@@ -44,7 +54,6 @@
     }
   }
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -71,6 +80,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet"/>
 
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
           crossorigin="anonymous"></script>
 
@@ -80,268 +90,440 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
           crossorigin="anonymous"></script>
 
+
   <title>Login</title>
 
 </head>
 
 
-<body style="background-image: url('static/images/regbg2.jpg');"
-      class="regbackground">
+<body>
 
 
-  <!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+     ========================= -->
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <img src="static/images/logoimg.png"
-         alt="logo"
-         class="logo">
-
-
-    <button class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent">
-
-      <span class="navbar-toggler-icon"></span>
-
-    </button>
+  <img src="static/images/logoimg.png"
+       alt="logo"
+       class="logo">
 
 
-    <div class="collapse navbar-collapse"
-         id="navbarSupportedContent">
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+
+  </button>
 
 
-      <!-- LEFT MENU -->
+  <div class="collapse navbar-collapse"
+       id="navbarSupportedContent">
 
-      <ul class="navbar-nav mr-auto">
+
+    <!-- LEFT MENU -->
+
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item active">
+
+        <a class="nav-link menu1"
+           href="index.php">
+
+          Home
+
+        </a>
+
+      </li>
+
+
+      <li class="nav-item active">
+
+        <a class="nav-link menu1"
+           href="post_job.php">
+
+          Post-Job
+
+        </a>
+
+      </li>
+
+
+      <li class="nav-item active">
+
+        <a class="nav-link menu1"
+           href="contact_us.php">
+
+          Contact-Us
+
+        </a>
+
+      </li>
+
+
+      <li class="nav-item active">
+
+        <a class="nav-link menu1"
+           href="about-us.php">
+
+          About-Us
+
+        </a>
+
+      </li>
+
+
+      <form action="jobdetails.php"
+            method="POST"
+            id="searchform">
 
         <li class="nav-item active">
+
+          <input type="submit"
+                 value="Jobs"
+                 form="searchform"
+                 name="search_btn"
+                 class="nav-link menu2"/>
+
+          <input type="hidden"
+                 value="Country"
+                 name="country">
+
+          <input type="hidden"
+                 value="State"
+                 name="state">
+
+          <input type="hidden"
+                 value="City"
+                 name="city">
+
+        </li>
+
+      </form>
+
+    </ul>
+
+
+    <!-- RIGHT MENU -->
+
+    <ul class="navbar-nav ms-auto">
+
+      <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) : ?>
+
+        <!-- LOGGED IN -->
+
+        <li class="nav-item active">
+
           <a class="nav-link menu1"
-             href="index.php">
-            Home
+             href="index.php?logout=1">
+
+            Log-out
+
           </a>
+
+        </li>
+
+      <?php else: ?>
+
+        <!-- NOT LOGGED IN -->
+
+        <li class="nav-item active">
+
+          <a class="nav-link menu1"
+             href="login.php">
+
+            Login
+
+          </a>
+
         </li>
 
 
         <li class="nav-item active">
+
           <a class="nav-link menu1"
-             href="post_job.php">
-            Post-Job
+             href="registration.php">
+
+            Register
+
           </a>
+
         </li>
 
+      <?php endif; ?>
 
-        <li class="nav-item active">
-          <a class="nav-link menu1"
-             href="contact_us.php">
-            Contact-Us
-          </a>
-        </li>
+    </ul>
 
+  </div>
 
-        <li class="nav-item active">
-          <a class="nav-link menu1"
-             href="about-us.php">
-            About-Us
-          </a>
-        </li>
+</nav>
 
 
-        <form action="jobdetails.php"
-              method="POST"
-              id="searchform">
+<br><br><br>
 
-          <li class="nav-item active">
+
+<!-- =========================
+     LOGIN FORM
+     ========================= -->
+
+<div class="container">
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+
+      <div class="card">
+
+        <div class="card-body">
+
+
+          <h2 class="text-center">
+            Login
+          </h2>
+
+          <br>
+
+
+          <?php if($flag == 1): ?>
+
+            <div class="alert alert-danger">
+
+              Email ID not found.
+
+            </div>
+
+          <?php endif; ?>
+
+
+          <?php if($flag == 2): ?>
+
+            <div class="alert alert-danger">
+
+              Incorrect Password.
+
+            </div>
+
+          <?php endif; ?>
+
+
+          <?php if($flag == 3): ?>
+
+            <div class="alert alert-success">
+
+              Login Successful.
+
+            </div>
+
+          <?php endif; ?>
+
+
+          <form action="login.php"
+                method="POST">
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+              <label>
+                Email ID
+              </label>
+
+              <input type="email"
+                     name="email_id"
+                     class="form-control"
+                     placeholder="Enter Email ID"
+                     required>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+              <label>
+                Password
+              </label>
+
+              <input type="password"
+                     name="password"
+                     class="form-control"
+                     placeholder="Enter Password"
+                     required>
+
+            </div>
+
+
+            <br>
+
 
             <input type="submit"
-                   value="Jobs"
-                   form="searchform"
-                   name="search_btn"
-                   class="nav-link menu2"/>
-
-            <input type="hidden"
-                   value="Country"
-                   name="country">
-
-            <input type="hidden"
-                   value="State"
-                   name="state">
-
-            <input type="hidden"
-                   value="City"
-                   name="city">
-
-          </li>
-
-        </form>
-
-      </ul>
+                   name="submit_btn"
+                   value="LOGIN"
+                   class="btn btn-primary btn-block">
 
 
-      <!-- RIGHT MENU -->
-
-      <ul class="navbar-nav ms-auto">
-
-        <?php if(!isset($_SESSION['logged_in'])) : ?>
-
-          <li class="nav-item active">
-
-            <a class="nav-link menu1"
-               href="login.php">
-              Login
-            </a>
-
-          </li>
+          </form>
 
 
-          <li class="nav-item active">
+          <br>
 
-            <a class="nav-link menu1"
-               href="registration.php">
+
+          <p class="text-center">
+
+            Don't have an account?
+
+            <a href="registration.php">
               Register
             </a>
 
-          </li>
+          </p>
 
-        <?php else: ?>
 
-          <li class="nav-item active">
+        </div>
 
-            <a class="nav-link menu1"
-               href="index.php?logout=1">
-              Log-out
-            </a>
+      </div>
 
-          </li>
-
-        <?php endif; ?>
-
-      </ul>
 
     </div>
-
-  </nav>
-
-
-  <!-- LOGIN BOX -->
-
-  <div class="logo_box"
-       style="margin-top: 50px">
-
-
-    <h2 style="margin-bottom: 15px; font-weight:bold;">
-      Login Here
-    </h2>
-
-
-    <img src="static/images/profile.png"
-         class="img_set" />
-
-
-    <!-- USER NOT REGISTERED -->
-
-    <?php if($flag == 1) : ?>
-
-      <div class="alert alert-danger"
-           role="alert">
-
-        This user is not registered with us.
-
-      </div>
-
-    <?php endif; ?>
-
-
-    <!-- INCORRECT PASSWORD -->
-
-    <?php if($flag == 2) : ?>
-
-      <div class="alert alert-danger"
-           role="alert">
-
-        Incorrect password.
-
-      </div>
-
-    <?php endif; ?>
-
-
-    <!-- LOGIN FORM -->
-
-    <form action="login.php"
-          method="post">
-
-
-      <div class="form">
-
-        <input type="email"
-               name="email_id"
-               placeholder=" "
-               class="textbox"
-               required />
-
-        <label class="form-label">
-          Email
-        </label>
-
-      </div>
-
-
-      <div class="form">
-
-        <input type="password"
-               name="password"
-               placeholder=" "
-               class="textbox"
-               required />
-
-        <label class="form-label">
-          Password
-        </label>
-
-
-        <input type="submit"
-               value="SUBMIT"
-               class="btn_desi"
-               name="submit_btn" />
-
-      </div>
-
-    </form>
-
-
-    <!-- LOGIN LINKS -->
-
-    <div class="login_container">
-
-      <span>
-
-        <a href="forgot_pass.html"
-           style="float:left;">
-
-          Forgot password?
-
-        </a>
-
-      </span>
-
-
-      <span>
-
-        <a href="registration.php"
-           style="float:right;">
-
-          Create account
-
-        </a>
-
-      </span>
-
-    </div>
-
 
   </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+     ========================= -->
+
+<footer>
+
+  <div class="container-fluid footer_desi">
+
+    <div class="row">
+
+
+      <div class="col-md-3">
+
+        <img src="static/images/logoimg.png"
+             alt="logo"
+             class="logo"
+             style="margin-top:20px;"/>
+
+        <br>
+
+        <span style="font-size:20px; margin-left:40px;">
+          &copy;
+        </span>
+
+        <span style="font-size:15px; margin-top:20px;">
+          2023
+        </span>
+
+      </div>
+
+
+      <div class="col-md-3">
+
+        <h5 style="margin-top:40px;">
+          QUICK LINKS
+        </h5>
+
+        <ul type="none">
+
+          <a href="#">
+            <li>New jobs</li>
+          </a>
+
+          <a href="#">
+            <li>New jobs</li>
+          </a>
+
+          <a href="#">
+            <li>New jobs</li>
+          </a>
+
+          <a href="#">
+            <li>New jobs</li>
+          </a>
+
+        </ul>
+
+      </div>
+
+
+      <div class="col-md-3">
+
+        <h5 style="margin-top:40px;">
+          RESOURCES
+        </h5>
+
+        <ul type="none">
+
+          <a href="index.php">
+            <li>Home</li>
+          </a>
+
+          <a href="post_job.php">
+            <li>Post Free Job</li>
+          </a>
+
+          <a href="contact_us.php">
+            <li>Contact us</li>
+          </a>
+
+        </ul>
+
+      </div>
+
+
+      <div class="col-md-3">
+
+        <h4 style="margin-top:40px;">
+          Get in touch
+        </h4>
+
+
+        <div class="icon-list">
+
+          <i class="bi bi-envelope-at"></i>
+
+          <span style="color:rgb(117, 157, 226);">
+            sarsunity05@gmail.com
+          </span>
+
+          <br><br>
+
+        </div>
+
+
+        <div class="icon-list">
+
+          <i class="bi bi-telephone-outbound"></i>
+
+          <span style="color:rgb(117, 157, 226);">
+            8767213110/9175201493
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</footer>
+
 
 </body>
 
