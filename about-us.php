@@ -132,7 +132,6 @@
         <ul type="none">  
         <a href="index.php">  <li>Home</li></a>
         <a href="post_job.php"> <li>Post Free Job</li></a>
-        <a href="login.php"><li>Login</li></a>
         <a href="contact_us.php"> <li>Contact us</li></a>
         </ul>
        
