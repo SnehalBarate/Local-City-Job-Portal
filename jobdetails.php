@@ -107,6 +107,7 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <ul class="navbar-nav mr-auto">
+
                 <li class="nav-item active">
                     <a class="nav-link menu1" href="index.php">Home</a>
                 </li>
@@ -130,9 +131,11 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                            name="search_btn"
                            class="nav-link menu2">
                 </li>
+
             </ul>
 
             <ul class="navbar-nav ms-auto">
+
                 <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) : ?>
 
                     <li class="nav-item active">
@@ -150,6 +153,7 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                     </li>
 
                 <?php endif; ?>
+
             </ul>
 
         </div>
@@ -160,7 +164,9 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
     </h2>
 
     <form action="jobdetails.php" method="POST" id="searchform">
+
         <div class="search-bar" style="padding:20px;">
+
             <div class="row g-4">
 
                 <div class="col-md-1 mx-auto"></div>
@@ -201,7 +207,9 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                 </div>
 
             </div>
+
         </div>
+
     </form>
 
     <div class="container" style="margin-bottom:19px;">
@@ -211,6 +219,7 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
         </h3>
 
         <?php
+
         if($var_country=="Country" && $var_state=="State" && $var_city=="City")
         {
             $job_details = $fcall->get_all_job_details();
@@ -232,16 +241,21 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
         ?>
 
         <div class="row">
+
             <div class="col-md-1"></div>
 
             <div class="col-md-10 display_job">
+
                 <div class="card mb-3">
+
                     <div class="card-body">
 
                         <div class="d-flex flex-column flex-lg-row">
+
                             <div class="row flex-fill">
 
                                 <div class="col-sm-6">
+
                                     <h4 class="j-name"><?php echo $job_name; ?></h4>
 
                                     <h5 class="j-company"><?php echo $company_name; ?></h5>
@@ -262,9 +276,11 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                                         <i class="bi bi-briefcase-fill"></i>
                                         <?php echo " ",$workplace_type; ?>
                                     </span>
+
                                 </div>
 
                                 <div class="col-sm-6">
+
                                     <p class="job-info1" style="margin-bottom:-5px;">
                                         More Details:
                                     </p>
@@ -274,6 +290,7 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                                     </p>
 
                                     <div class="icon-list">
+
                                         <p class="job-info1" style="margin-bottom:-5px;">
                                             Contact-Us:
                                         </p>
@@ -283,17 +300,23 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                                         <span>
                                             <?php echo " ",$contact_no; ?>
                                         </span>
+
                                     </div>
+
                                 </div>
 
                             </div>
+
                         </div>
 
                     </div>
+
                 </div>
+
             </div>
 
             <div class="col-md-1"></div>
+
         </div>
 
         <br />
@@ -332,16 +355,21 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
         ?>
 
         <div class="row">
+
             <div class="col-md-1"></div>
 
             <div class="col-md-10 display_job">
+
                 <div class="card mb-3">
+
                     <div class="card-body">
 
                         <div class="d-flex flex-column flex-lg-row">
+
                             <div class="row flex-fill">
 
                                 <div class="col-sm-6">
+
                                     <h4 class="j-name"><?php echo $job_name ?></h4>
 
                                     <h5 class="j-company">
@@ -364,9 +392,11 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                                         <i class="bi bi-briefcase-fill"></i>
                                         <?php echo " ",$workplace_type; ?>
                                     </span>
+
                                 </div>
 
                                 <div class="col-sm-6">
+
                                     <p class="job-info1" style="margin-bottom:-5px;">
                                         More Details:
                                     </p>
@@ -376,6 +406,7 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                                     </p>
 
                                     <div class="icon-list">
+
                                         <p class="job-info1" style="margin-bottom:-5px;">
                                             Contact-Us:
                                         </p>
@@ -385,17 +416,23 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                                         <span>
                                             <?php echo " ",$contact_no; ?>
                                         </span>
+
                                     </div>
+
                                 </div>
 
                             </div>
+
                         </div>
 
                     </div>
+
                 </div>
+
             </div>
 
             <div class="col-md-1"></div>
+
         </div>
 
         <br />
@@ -409,6 +446,7 @@ $var_city    = isset($_POST['city']) ? $_POST['city'] : "City";
                 echo "No data found";
             }
         }
+
         ?>
 
     </div>
