@@ -1,6 +1,8 @@
 <?php
+  session_start();
+
   require_once('static/lib/functions.php');
-  $fcall= new class_functions();
+  $fcall = new class_functions();
 
   if(isset($_GET['logout']))
   {
@@ -38,7 +40,6 @@
     crossorigin="anonymous"></script>
 
   <style>
-    /* ALL YOUR ORIGINAL STYLES REMAIN UNCHANGED */
 
     .align {
       margin-top: 50px;
@@ -64,6 +65,7 @@
         width: inherit;
       }
     }
+
   </style>
 
 </head>
@@ -88,22 +90,32 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+      <!-- LEFT NAVBAR -->
+
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item active">
-          <a class="nav-link menu1" href="index.php">Home</a>
+          <a class="nav-link menu1" href="index.php">
+            Home
+          </a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link menu1" href="post_job.php">Post-Job</a>
+          <a class="nav-link menu1" href="post_job.php">
+            Post-Job
+          </a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link menu1" href="contact_us.php">Contact-Us</a>
+          <a class="nav-link menu1" href="contact_us.php">
+            Contact-Us
+          </a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link menu1" href="about-us.php">About-Us</a>
+          <a class="nav-link menu1" href="about-us.php">
+            About-Us
+          </a>
         </li>
 
         <form action="jobdetails.php" method="POST" id="searchform">
@@ -116,9 +128,17 @@
                    name="search_btn"
                    class="nav-link menu2"/>
 
-            <input type="hidden" value="Country" name="country">
-            <input type="hidden" value="State" name="state">
-            <input type="hidden" value="City" name="city">
+            <input type="hidden"
+                   value="Country"
+                   name="country">
+
+            <input type="hidden"
+                   value="State"
+                   name="state">
+
+            <input type="hidden"
+                   value="City"
+                   name="city">
 
           </li>
 
@@ -127,34 +147,49 @@
       </ul>
 
 
-      <!-- RIGHT SIDE NAVBAR -->
+      <!-- RIGHT NAVBAR -->
 
       <ul class="navbar-nav ms-auto">
 
-        <?php if(!isset($_SESSION['logged_in'])) : ?>
-
-          <!-- NOT LOGGED IN -->
-
-          <li class="nav-item active">
-            <a class="nav-link menu1" href="login.php">
-              Login
-            </a>
-          </li>
-
-          <li class="nav-item active">
-            <a class="nav-link menu1" href="registration.php">
-              Register
-            </a>
-          </li>
-
-        <?php else: ?>
+        <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) : ?>
 
           <!-- LOGGED IN -->
 
           <li class="nav-item active">
-            <a class="nav-link menu1" href="index.php?logout=1">
+
+            <a class="nav-link menu1"
+               href="index.php?logout=1">
+
               Log-out
+
             </a>
+
+          </li>
+
+        <?php else: ?>
+
+          <!-- NOT LOGGED IN -->
+
+          <li class="nav-item active">
+
+            <a class="nav-link menu1"
+               href="login.php">
+
+              Login
+
+            </a>
+
+          </li>
+
+          <li class="nav-item active">
+
+            <a class="nav-link menu1"
+               href="registration.php">
+
+              Register
+
+            </a>
+
           </li>
 
         <?php endif; ?>
@@ -175,16 +210,23 @@
 
       <div class="col-md-5">
 
-        <h1>Let's make your next <br>great hire Fast...</h1>
+        <h1>
+          Let's make your next <br>great hire Fast...
+        </h1>
 
         <h1>
           Let's Post a new job and Hire skilled employee...
         </h1>
 
         <a href="form_post_job.php">
-          <button type="button" class="btn btn-primary btn-lg cs-btn">
+
+          <button type="button"
+                  class="btn btn-primary btn-lg cs-btn">
+
             Post a Job
+
           </button>
+
         </a>
 
       </div>
@@ -192,7 +234,8 @@
 
       <div class="col-md-7">
 
-        <img src="static/images/emp.jpg" class="cst_img" />
+        <img src="static/images/emp.jpg"
+             class="cst_img" />
 
       </div>
 
@@ -223,8 +266,11 @@
 
           <div class="card-body">
 
-            <p class="card-text" style="font-weight:lighter;">
+            <p class="card-text"
+               style="font-weight:lighter;">
+
               All you need is your email address to create an account and start building your job post.
+
             </p>
 
           </div>
@@ -236,7 +282,8 @@
 
       <div class="col-md-4">
 
-        <div class="card" style="width: 18rem;">
+        <div class="card"
+             style="width: 18rem;">
 
           <h4 style="text-align: center;">
             Build your job post
@@ -248,8 +295,11 @@
 
           <div class="card-body">
 
-            <p class="card-text" style="font-weight:lighter;">
+            <p class="card-text"
+               style="font-weight:lighter;">
+
               Then just add a title Description, and location to your job post, and your are ready to go.
+
             </p>
 
           </div>
@@ -261,7 +311,8 @@
 
       <div class="col-md-4">
 
-        <div class="card" style="width: 18rem;">
+        <div class="card"
+             style="width: 18rem;">
 
           <h4 style="text-align: center;">
             Post a Job
@@ -273,8 +324,11 @@
 
           <div class="card-body">
 
-            <p class="card-text c-txt" style="font-weight:lighter;">
+            <p class="card-text c-txt"
+               style="font-weight:lighter;">
+
               After you post your job According to your need you will find a employee which you want.
+
             </p>
 
           </div>
@@ -299,9 +353,11 @@
         </h2>
 
         <p style="font-size: 18px; font-weight:lighter;">
+
           Finding the best fit for the job shouldn’t be a full-time job.
           local city job's simple and powerful tools let you source,
           screen, and hire faster.
+
         </p>
 
       </div>
