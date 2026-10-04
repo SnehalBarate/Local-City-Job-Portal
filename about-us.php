@@ -19,6 +19,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -62,35 +63,54 @@
             </li>
 
             <form action="jobdetails.php" method="POST" id="searchform">
+
                 <li class="nav-item active">
-                    <input type="submit" value="Jobs" form="searchform" name="search_btn" class="nav-link menu2"/>
+
+                    <input type="submit"
+                           value="Jobs"
+                           form="searchform"
+                           name="search_btn"
+                           class="nav-link menu2"/>
+
                     <input type="hidden" value="Country" name="country">
                     <input type="hidden" value="State" name="state">
                     <input type="hidden" value="City" name="city">
+
                 </li>
+
             </form>
 
         </ul>
 
-        <!-- Login / Register / Logout -->
+
+        <!-- RIGHT SIDE NAVBAR -->
+
         <ul class="navbar-nav ms-auto">
 
             <?php if(!isset($_SESSION['logged_in'])) : ?>
 
-                <!-- User is NOT logged in -->
+                <!-- NOT LOGGED IN -->
+
                 <li class="nav-item active">
-                    <a class="nav-link menu1" href="login.php">Login</a>
+                    <a class="nav-link menu1" href="login.php">
+                        Login
+                    </a>
                 </li>
 
                 <li class="nav-item active">
-                    <a class="nav-link menu1" href="registration.php">Register</a>
+                    <a class="nav-link menu1" href="registration.php">
+                        Register
+                    </a>
                 </li>
 
             <?php else: ?>
 
-                <!-- User IS logged in -->
+                <!-- LOGGED IN -->
+
                 <li class="nav-item active">
-                    <a class="nav-link menu1" href="index.php?logout=1">Log-out</a>
+                    <a class="nav-link menu1" href="index.php?logout=1">
+                        Log-out
+                    </a>
                 </li>
 
             <?php endif; ?>
@@ -100,6 +120,8 @@
     </div>
 </nav>
 
+
+<!-- ABOUT US -->
 
 <div class="about-us">
 
@@ -111,31 +133,41 @@
         Local City Job is the site which provides jobs in your area.<br />
         The project is being implemented under the guidance of managing director of Dream Technology, Shrikant Kadam. <br />  
         It works towards bridging the gap between job-seekers and employers.<br /> 
-        The digital centralized portal provides a wide range of services including job search, job matching, rich content, services of local service providers like drivers, plumbers, etc for households and various other services<br /> 
+        The digital centralized portal provides a wide range of services including job search, job matching, rich content, services of local service providers like drivers, plumbers,etc for households and various other services<br /> 
         Local City Job does not charge any fees for registration on the portal and its services.<br /> 
     </p>
 
 </div>
 
 
+<!-- TEAM -->
+
 <div class="team">
 
     <h1 class="t-m">Team Members</h1>
 
     <ul class="t-names">
+
         <li>Barate Snehal</li>
         <li>Bhosale Rajnandini</li>
         <li>Devarkonda Shrutika</li>
         <li>Vhandre Archana</li>
+
     </ul>
 
 </div>
 
 
+<!-- IMAGE -->
+
 <div class="au-design">
+
     <img src="static/images/au-bg.png" class="imgh"/>
+
 </div>
 
+
+<!-- FOOTER -->
 
 <footer>
 
@@ -143,57 +175,115 @@
 
         <div class="row">
 
+            <!-- LOGO -->
+
             <div class="col-md-3">
 
-                <img src="static/images/logoimg.png" alt="logo" class="logo" style="margin-top:20px;"/><br>
+                <img src="static/images/logoimg.png"
+                     alt="logo"
+                     class="logo"
+                     style="margin-top:20px;"/>
 
-                <span style="font-size:20px; margin-left:40px;">&copy;</span>
-                <span style="font-size:15px; margin-top:20px;">2023</span>
+                <br>
+
+                <span style="font-size:20px; margin-left:40px;">
+                    &copy;
+                </span>
+
+                <span style="font-size:15px; margin-top:20px;">
+                    2023
+                </span>
 
             </div>
 
+
+            <!-- QUICK LINKS -->
+
             <div class="col-md-3">
 
-                <h5 style="margin-top:40px;">QUICK LINKS</h5>
+                <h5 style="margin-top:40px;">
+                    QUICK LINKS
+                </h5>
 
                 <ul type="none">
-                    <a href="#"><li>New jobs</li></a>
-                    <a href="#"><li>New jobs</li></a>
-                    <a href="#"><li>New jobs</li></a>
-                    <a href="#"><li>New jobs</li></a>
+
+                    <a href="#">
+                        <li>New jobs</li>
+                    </a>
+
+                    <a href="#">
+                        <li>New jobs</li>
+                    </a>
+
+                    <a href="#">
+                        <li>New jobs</li>
+                    </a>
+
+                    <a href="#">
+                        <li>New jobs</li>
+                    </a>
+
                 </ul>
 
             </div>
 
+
+            <!-- RESOURCES -->
+
             <div class="col-md-3">
 
-                <h5 style="margin-top:40px;">RESOURCES</h5>
+                <h5 style="margin-top:40px;">
+                    RESOURCES
+                </h5>
 
                 <ul type="none">
-                    <a href="index.php"><li>Home</li></a>
-                    <a href="post_job.php"><li>Post Free Job</li></a>
-                    <a href="contact_us.php"><li>Contact us</li></a>
+
+                    <a href="index.php">
+                        <li>Home</li>
+                    </a>
+
+                    <a href="post_job.php">
+                        <li>Post Free Job</li>
+                    </a>
+
+                    <a href="contact_us.php">
+                        <li>Contact us</li>
+                    </a>
+
                 </ul>
 
             </div>
 
+
+            <!-- CONTACT -->
+
             <div class="col-md-3">
 
-                <h4 style="margin-top:40px;">Get in touch</h4>
+                <h4 style="margin-top:40px;">
+                    Get in touch
+                </h4>
 
                 <div class="icon-list">
+
                     <i class="bi bi-envelope-at"></i>
+
                     <span style="color:rgb(117, 157, 226);">
                         sarsunity05@gmail.com
                     </span>
+
                     <br><br>
+
                 </div>
 
+
                 <div class="icon-list">
+
                     <i class="bi bi-telephone-outbound"></i>
+
                     <span style="color:rgb(117, 157, 226);">
                         8767213110/9175201493
                     </span>
+
                 </div>
 
             </div>
@@ -205,4 +295,5 @@
 </footer>
 
 </body>
+
 </html>
