@@ -1,47 +1,33 @@
 <?php
   require_once('static/lib/functions.php');
-  $fcall = new class_functions();
-
-  /* =========================
-     LOGOUT
-     ========================= */
-
+  $fcall= new class_functions();
+  
   if(isset($_GET['logout']))
   {
     session_destroy();
-
     header("location:login.php");
     exit();
   }
-
-  $flag = 0;
-
-
-  /* =========================
-     LOGIN
-     ========================= */
-
+  
+  $flag=0;
   if(isset($_POST['submit_btn']))
   {
-    $var_email_id = $_POST['email_id'];
-    $var_password = $_POST['password'];
+    $var_email_id=$_POST['email_id'];
+    $var_password=$_POST['password'];
 
-    $fcall_password = $fcall->login_authentication($var_email_id);
+    $fcall_password= $fcall->login_authentication($var_email_id);
 
-    if($fcall_password == "")
+    if($fcall_password=="")
     {
-      $flag = 1;
+      $flag=1;
     }
     else
     {
-      if($var_password == $fcall_password)
+      if($var_password==$fcall_password)
       {
-        $flag = 3;
+        $flag=3;
 
-        /*
-         * ONLY LOGIN STATUS IS STORED.
-         * Username/mobile number is NOT stored.
-         */
+        // Store only login status
         $_SESSION['logged_in'] = true;
 
         header("location:index.php");
@@ -49,481 +35,218 @@
       }
       else
       {
-        $flag = 2;
+        $flag=2;
       }
     }
   }
-?>
+?>  
+
 
 <!doctype html>
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="static/css/style.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
-
-  <link rel="stylesheet"
-        href="static/css/style.css">
-
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet"/>
-
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-          crossorigin="anonymous"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-          crossorigin="anonymous"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-          crossorigin="anonymous"></script>
-
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
   <title>Login</title>
-
 </head>
 
+<body style="background-image: url('static/images/regbg2.jpg');" class="regbackground">
 
-<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
+    <img src="static/images/logoimg.png" alt="logo" class="logo">
 
-<!-- =========================
-     NAVBAR
-     ========================= -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-  <img src="static/images/logoimg.png"
-       alt="logo"
-       class="logo">
-
-
-  <button class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
-
-    <span class="navbar-toggler-icon"></span>
-
-  </button>
-
-
-  <div class="collapse navbar-collapse"
-       id="navbarSupportedContent">
-
-
-    <!-- LEFT MENU -->
-
-    <ul class="navbar-nav mr-auto">
-
-      <li class="nav-item active">
-
-        <a class="nav-link menu1"
-           href="index.php">
-
-          Home
-
-        </a>
-
-      </li>
-
-
-      <li class="nav-item active">
-
-        <a class="nav-link menu1"
-           href="post_job.php">
-
-          Post-Job
-
-        </a>
-
-      </li>
-
-
-      <li class="nav-item active">
-
-        <a class="nav-link menu1"
-           href="contact_us.php">
-
-          Contact-Us
-
-        </a>
-
-      </li>
-
-
-      <li class="nav-item active">
-
-        <a class="nav-link menu1"
-           href="about-us.php">
-
-          About-Us
-
-        </a>
-
-      </li>
-
-
-      <form action="jobdetails.php"
-            method="POST"
-            id="searchform">
+      <ul class="navbar-nav mr-auto">
 
         <li class="nav-item active">
-
-          <input type="submit"
-                 value="Jobs"
-                 form="searchform"
-                 name="search_btn"
-                 class="nav-link menu2"/>
-
-          <input type="hidden"
-                 value="Country"
-                 name="country">
-
-          <input type="hidden"
-                 value="State"
-                 name="state">
-
-          <input type="hidden"
-                 value="City"
-                 name="city">
-
+          <a class="nav-link menu1" href="index.php">Home</a>
         </li>
-
-      </form>
-
-    </ul>
-
-
-    <!-- RIGHT MENU -->
-
-    <ul class="navbar-nav ms-auto">
-
-      <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) : ?>
-
-        <!-- LOGGED IN -->
 
         <li class="nav-item active">
-
-          <a class="nav-link menu1"
-             href="index.php?logout=1">
-
-            Log-out
-
-          </a>
-
+          <a class="nav-link menu1" href="post_job.php">Post-Job</a>
         </li>
-
-      <?php else: ?>
-
-        <!-- NOT LOGGED IN -->
 
         <li class="nav-item active">
-
-          <a class="nav-link menu1"
-             href="login.php">
-
-            Login
-
-          </a>
-
+          <a class="nav-link menu1" href="contact_us.php">Contact-Us</a>
         </li>
-
 
         <li class="nav-item active">
-
-          <a class="nav-link menu1"
-             href="registration.php">
-
-            Register
-
-          </a>
-
+          <a class="nav-link menu1" href="about-us.php">About-Us</a>
         </li>
 
-      <?php endif; ?>
+        <form action="jobdetails.php" method="POST" id="searchform">
 
-    </ul>
-
-  </div>
-
-</nav>
-
-
-<br><br><br>
-
-
-<!-- =========================
-     LOGIN FORM
-     ========================= -->
-
-<div class="container">
-
-  <div class="row justify-content-center">
-
-    <div class="col-md-6">
-
-
-      <div class="card">
-
-        <div class="card-body">
-
-
-          <h2 class="text-center">
-            Login
-          </h2>
-
-          <br>
-
-
-          <?php if($flag == 1): ?>
-
-            <div class="alert alert-danger">
-
-              Email ID not found.
-
-            </div>
-
-          <?php endif; ?>
-
-
-          <?php if($flag == 2): ?>
-
-            <div class="alert alert-danger">
-
-              Incorrect Password.
-
-            </div>
-
-          <?php endif; ?>
-
-
-          <?php if($flag == 3): ?>
-
-            <div class="alert alert-success">
-
-              Login Successful.
-
-            </div>
-
-          <?php endif; ?>
-
-
-          <form action="login.php"
-                method="POST">
-
-
-            <!-- EMAIL -->
-
-            <div class="form-group">
-
-              <label>
-                Email ID
-              </label>
-
-              <input type="email"
-                     name="email_id"
-                     class="form-control"
-                     placeholder="Enter Email ID"
-                     required>
-
-            </div>
-
-
-            <!-- PASSWORD -->
-
-            <div class="form-group">
-
-              <label>
-                Password
-              </label>
-
-              <input type="password"
-                     name="password"
-                     class="form-control"
-                     placeholder="Enter Password"
-                     required>
-
-            </div>
-
-
-            <br>
-
+          <li class="nav-item active">
 
             <input type="submit"
-                   name="submit_btn"
-                   value="LOGIN"
-                   class="btn btn-primary btn-block">
+                   value="Jobs"
+                   form="searchform"
+                   name="search_btn"
+                   class="nav-link menu2"/>
+
+            <input type="hidden"
+                   value="Country"
+                   name="country">
+
+            <input type="hidden"
+                   value="State"
+                   name="state">
+
+            <input type="hidden"
+                   value="City"
+                   name="city">
+
+          </li>
+
+        </form>
+
+      </ul>
 
 
-          </form>
+      <!-- RIGHT SIDE NAVBAR -->
 
+      <ul class="navbar-nav ms-auto">
 
-          <br>
+        <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) : ?>
 
+          <li class="nav-item active">
+            <a class="nav-link menu1"
+               href="login.php?logout=1">
+              Log-out
+            </a>
+          </li>
 
-          <p class="text-center">
+        <?php else: ?>
 
-            Don't have an account?
+          <li class="nav-item active">
+            <a class="nav-link menu1"
+               href="login.php">
+              Login
+            </a>
+          </li>
 
-            <a href="registration.php">
+          <li class="nav-item active">
+            <a class="nav-link menu1"
+               href="registration.php">
               Register
             </a>
+          </li>
 
-          </p>
+        <?php endif; ?>
+
+      </ul>
+
+    </div>
+  </nav>
+  
+  
+  <div class="logo_box" style="margin-top: 50px">
+
+    <h2 style="margin-bottom: 15px; font-weight:bold;">
+      Login Here
+    </h2>
+
+    <img src="static/images/profile.png" class="img_set" />
+    
+    
+    <?php if($flag==1) : ?>
+
+      <div class="alert alert-danger" role="alert">
+        This user is not registered with us.
+      </div>
+
+    <?php endif; ?>
+    
+    
+    <?php if($flag==2) : ?>
+
+      <div class="alert alert-danger" role="alert">
+        Incorrect password.
+      </div>
+
+    <?php endif; ?>
 
 
-        </div>
+    <form action="login.php" method="post">
+
+      <div class="form">
+
+        <input type="email"
+               name="email_id"
+               placeholder=" "
+               class="textbox" />
+
+        <label class="form-label">
+          Email
+        </label>
 
       </div>
 
+
+      <div class="form">
+
+        <input type="password"
+               name="password"
+               placeholder=" "
+               class="textbox" />
+
+        <label class="form-label">
+          Password
+        </label>
+
+        <input type="submit"
+               placeholder="SUBMIT"
+               class="btn_desi"
+               name="submit_btn" />
+
+      </div>
+
+    </form>
+
+
+    <div class="login_container">
+
+      <span>
+        <a href="forgot_pass.html"
+           style="float:left;">
+
+          Forgot password?
+
+        </a>
+      </span>
+
+      <span>
+        <a href="registration.php"
+           style="float:right;">
+
+          Create account
+
+        </a>
+      </span>
 
     </div>
 
   </div>
-
-</div>
-
-
-<!-- =========================
-     FOOTER
-     ========================= -->
-
-<footer>
-
-  <div class="container-fluid footer_desi">
-
-    <div class="row">
-
-
-      <div class="col-md-3">
-
-        <img src="static/images/logoimg.png"
-             alt="logo"
-             class="logo"
-             style="margin-top:20px;"/>
-
-        <br>
-
-        <span style="font-size:20px; margin-left:40px;">
-          &copy;
-        </span>
-
-        <span style="font-size:15px; margin-top:20px;">
-          2023
-        </span>
-
-      </div>
-
-
-      <div class="col-md-3">
-
-        <h5 style="margin-top:40px;">
-          QUICK LINKS
-        </h5>
-
-        <ul type="none">
-
-          <a href="#">
-            <li>New jobs</li>
-          </a>
-
-          <a href="#">
-            <li>New jobs</li>
-          </a>
-
-          <a href="#">
-            <li>New jobs</li>
-          </a>
-
-          <a href="#">
-            <li>New jobs</li>
-          </a>
-
-        </ul>
-
-      </div>
-
-
-      <div class="col-md-3">
-
-        <h5 style="margin-top:40px;">
-          RESOURCES
-        </h5>
-
-        <ul type="none">
-
-          <a href="index.php">
-            <li>Home</li>
-          </a>
-
-          <a href="post_job.php">
-            <li>Post Free Job</li>
-          </a>
-
-          <a href="contact_us.php">
-            <li>Contact us</li>
-          </a>
-
-        </ul>
-
-      </div>
-
-
-      <div class="col-md-3">
-
-        <h4 style="margin-top:40px;">
-          Get in touch
-        </h4>
-
-
-        <div class="icon-list">
-
-          <i class="bi bi-envelope-at"></i>
-
-          <span style="color:rgb(117, 157, 226);">
-            sarsunity05@gmail.com
-          </span>
-
-          <br><br>
-
-        </div>
-
-
-        <div class="icon-list">
-
-          <i class="bi bi-telephone-outbound"></i>
-
-          <span style="color:rgb(117, 157, 226);">
-            8767213110/9175201493
-          </span>
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</footer>
-
 
 </body>
 
