@@ -55,7 +55,7 @@ if(isset($_POST['reset_btn']))
 
     <style>
         /* ==========================================
-           FORGOT PASSWORD BOX
+           FORGOT PASSWORD CARD
         ========================================== */
 
         .forgot_box {
@@ -100,10 +100,37 @@ if(isset($_POST['reset_btn']))
         }
 
         .forgot_box .form {
-            position: relative !important;
-            margin-bottom: 22px !important;
+            width: 100% !important;
+
+            margin-bottom: 20px !important;
+
             text-align: left !important;
+
+            position: static !important;
         }
+
+        /* ==========================================
+           LABEL
+        ========================================== */
+
+        .forgot_box .form-label {
+            position: static !important;
+
+            display: block !important;
+
+            margin: 0 0 6px 5px !important;
+
+            font-size: 16px !important;
+            font-weight: 600 !important;
+
+            color: #111 !important;
+
+            pointer-events: auto !important;
+        }
+
+        /* ==========================================
+           INPUT
+        ========================================== */
 
         .forgot_box .textbox {
             width: 100% !important;
@@ -112,34 +139,15 @@ if(isset($_POST['reset_btn']))
             border: none !important;
             border-bottom: 2px solid #333 !important;
 
-            background: transparent !important;
+            background: rgba(255,255,255,0.25) !important;
+
             outline: none !important;
 
             font-size: 16px !important;
-            padding: 8px 5px !important;
+
+            padding: 7px 5px !important;
 
             box-sizing: border-box !important;
-        }
-
-        .forgot_box .form-label {
-            position: absolute !important;
-
-            left: 5px !important;
-            top: 8px !important;
-
-            font-size: 17px !important;
-            font-weight: 600 !important;
-
-            pointer-events: none !important;
-
-            transition: 0.2s !important;
-        }
-
-        .forgot_box .textbox:focus + .form-label,
-        .forgot_box .textbox:not(:placeholder-shown) + .form-label {
-            top: -18px !important;
-            font-size: 13px !important;
-            color: #0066cc !important;
         }
 
         .forgot_box .textbox:focus {
@@ -147,7 +155,7 @@ if(isset($_POST['reset_btn']))
         }
 
         /* ==========================================
-           RESET PASSWORD BUTTON
+           RESET BUTTON
         ========================================== */
 
         .forgot_box .btn_desi {
@@ -199,6 +207,7 @@ if(isset($_POST['reset_btn']))
             padding: 15px 0 0 !important;
 
             display: flex !important;
+
             justify-content: space-between !important;
             align-items: center !important;
 
@@ -330,15 +339,14 @@ if(isset($_POST['reset_btn']))
       class="regbackground">
 
 
-<!-- ==========================================
-     NAVBAR
-========================================== -->
+<!-- NAVBAR -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
     <img src="static/images/logoimg.png"
          alt="logo"
          class="logo">
+
 
     <button class="navbar-toggler"
             type="button"
@@ -353,8 +361,6 @@ if(isset($_POST['reset_btn']))
     <div class="collapse navbar-collapse"
          id="navbarSupportedContent">
 
-
-        <!-- LEFT NAVBAR -->
 
         <ul class="navbar-nav mr-auto">
 
@@ -424,8 +430,6 @@ if(isset($_POST['reset_btn']))
         </ul>
 
 
-        <!-- RIGHT NAVBAR -->
-
         <ul class="navbar-nav ms-auto">
 
             <li class="nav-item active">
@@ -458,12 +462,9 @@ if(isset($_POST['reset_btn']))
 </nav>
 
 
-<!-- ==========================================
-     SUCCESS PAGE
-========================================== -->
-
 <?php if($flag == 3) : ?>
 
+<!-- PASSWORD RESET SUCCESS -->
 
 <div class="logo_box forgot_box">
 
@@ -524,12 +525,9 @@ if(isset($_POST['reset_btn']))
 </div>
 
 
-<!-- ==========================================
-     FORGOT PASSWORD FORM
-========================================== -->
-
 <?php else : ?>
 
+<!-- FORGOT PASSWORD FORM -->
 
 <div class="logo_box forgot_box">
 
@@ -575,16 +573,15 @@ if(isset($_POST['reset_btn']))
 
         <div class="form">
 
+            <label class="form-label">
+                Email
+            </label>
+
             <input type="email"
                    name="email_id"
                    placeholder=" "
                    class="textbox"
                    required>
-
-
-            <label class="form-label">
-                Email
-            </label>
 
         </div>
 
@@ -593,16 +590,15 @@ if(isset($_POST['reset_btn']))
 
         <div class="form">
 
+            <label class="form-label">
+                Mobile Number
+            </label>
+
             <input type="text"
                    name="mobile_no"
                    placeholder=" "
                    class="textbox"
                    required>
-
-
-            <label class="form-label">
-                Mobile Number
-            </label>
 
         </div>
 
@@ -611,16 +607,15 @@ if(isset($_POST['reset_btn']))
 
         <div class="form">
 
+            <label class="form-label">
+                New Password
+            </label>
+
             <input type="password"
                    name="new_password"
                    placeholder=" "
                    class="textbox"
                    required>
-
-
-            <label class="form-label">
-                New Password
-            </label>
 
         </div>
 
@@ -629,16 +624,15 @@ if(isset($_POST['reset_btn']))
 
         <div class="form">
 
+            <label class="form-label">
+                Confirm Password
+            </label>
+
             <input type="password"
                    name="confirm_password"
                    placeholder=" "
                    class="textbox"
                    required>
-
-
-            <label class="form-label">
-                Confirm Password
-            </label>
 
         </div>
 
@@ -678,10 +672,6 @@ if(isset($_POST['reset_btn']))
 
 <?php endif; ?>
 
-
-<!-- ==========================================
-     SCRIPTS
-========================================== -->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         crossorigin="anonymous"></script>
