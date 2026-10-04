@@ -227,7 +227,7 @@
     <div class="login_container">
 
       <span>
-        <a href="forgot_pass.html"
+        <a href="forgot_pass.php"
            style="float:left;">
 
           Forgot password?
