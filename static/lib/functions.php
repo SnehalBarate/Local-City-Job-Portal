@@ -1,35 +1,78 @@
 <?php
-session_start();
+
+/* ============================================================
+   SESSION START
+   ============================================================ */
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+/* ============================================================
+   CLASS
+   ============================================================ */
 
 class class_functions
 {
     private $con;
 
+
+    /* ========================================================
+       DATABASE CONNECTION
+       ======================================================== */
+
     function __construct()
     {
-        // Database connectivity using Render environment variables
         $host = getenv("DB_HOST");
         $port = (int) getenv("DB_PORT");
         $user = getenv("DB_USER");
         $pass = getenv("DB_PASSWORD");
         $db   = getenv("DB_NAME");
 
-        $this->con = new mysqli($host, $user, $pass, $db, $port);
+        $this->con = new mysqli(
+            $host,
+            $user,
+            $pass,
+            $db,
+            $port
+        );
 
-        if ($this->con->connect_error) {
+        if ($this->con->connect_error)
+        {
             die("Database Connection Failed: " . $this->con->connect_error);
         }
 
         $this->con->set_charset("utf8mb4");
     }
 
-    function create_user_account($full_name,$email_id,$mobile_no,$dob,$gender,$country,$state,$city,$password)
+
+    /* ========================================================
+       CREATE USER ACCOUNT
+       ======================================================== */
+
+    function create_user_account(
+        $full_name,
+        $email_id,
+        $mobile_no,
+        $dob,
+        $gender,
+        $country,
+        $state,
+        $city,
+        $password
+    )
     {
         $current_date = date("Y-m-d");
         $current_time = date("H:i:s A");
 
-        // duplicate check (prepared statement, no SQL injection)
-        if ($chk = $this->con->prepare("SELECT `email_id`,`mobile_no` FROM `users_data` WHERE `email_id`=? OR `mobile_no`=?"))
+        if (
+            $chk = $this->con->prepare(
+                "SELECT `email_id`,`mobile_no`
+                 FROM `users_data`
+                 WHERE `email_id`=? OR `mobile_no`=?"
+            )
+        )
         {
             $chk->bind_param("ss", $email_id, $mobile_no);
             $chk->execute();
@@ -49,33 +92,80 @@ class class_functions
                 {
                     $_SESSION['flag'] = 3;
                 }
+
                 return false;
             }
+
             $chk->close();
         }
 
-        if ($stmt = $this->con->prepare("INSERT INTO `users_data`(`full_name`, `email_id`, `mobile_no`, `dob`, `gender`, `country`, `state`, `city`, `password`,`reg_date`,`reg_time`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"))
+
+        if (
+            $stmt = $this->con->prepare(
+                "INSERT INTO `users_data`
+                (`full_name`,`email_id`,`mobile_no`,`dob`,`gender`,
+                 `country`,`state`,`city`,`password`,`reg_date`,`reg_time`)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+            )
+        )
         {
-            $stmt->bind_param("sssssssssss",$full_name,$email_id,$mobile_no,$dob,$gender,$country,$state,$city,$password,$current_date,$current_time);
+            $stmt->bind_param(
+                "sssssssssss",
+                $full_name,
+                $email_id,
+                $mobile_no,
+                $dob,
+                $gender,
+                $country,
+                $state,
+                $city,
+                $password,
+                $current_date,
+                $current_time
+            );
 
             if ($stmt->execute())
             {
                 $_SESSION['flag'] = 4;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       GET USERS DETAILS
+       ======================================================== */
+
     function get_users_details()
     {
-        if ($stmt = $this->con->prepare("SELECT `id`,`full_name`,`email_id`,`mobile_no`,`dob`,`gender`,`country`,`state`,`city`,`password`,`reg_date`,`reg_time` from `users_data`"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `id`,`full_name`,`email_id`,`mobile_no`,
+                        `dob`,`gender`,`country`,`state`,`city`,
+                        `password`,`reg_date`,`reg_time`
+                 FROM `users_data`"
+            )
+        )
         {
-            $stmt->bind_result($res_id,$res_full_name,$res_email_id,$res_mobile_number,$res_dob,$res_gender,$res_country,$res_state,$res_city,$res_password,$res_date,$res_time);
+            $stmt->bind_result(
+                $res_id,
+                $res_full_name,
+                $res_email_id,
+                $res_mobile_number,
+                $res_dob,
+                $res_gender,
+                $res_country,
+                $res_state,
+                $res_city,
+                $res_password,
+                $res_date,
+                $res_time
+            );
 
             if ($stmt->execute())
             {
@@ -100,63 +190,111 @@ class class_functions
                     $counter++;
                 }
 
-                if (!empty($data))
-                {
-                    return $data;
-                }
-                else
-                {
-                    return false;
-                }
+                return !empty($data) ? $data : false;
             }
         }
+
         return false;
     }
+
+
+    /* ========================================================
+       DELETE USER
+       ======================================================== */
 
     function delete_user_data($del_id)
     {
-        if ($stmt = $this->con->prepare("DELETE from `users_data` where `id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "DELETE FROM `users_data` WHERE `id`=?"
+            )
+        )
         {
-            $stmt->bind_param("i",$del_id);
+            $stmt->bind_param("i", $del_id);
 
-            if ($stmt->execute())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return $stmt->execute();
         }
+
         return false;
     }
 
-    function update_user_record($var_full_name,$var_r_email_id,$var_mobile_no,$var_dob,$var_gender,$var_country,$var_state,$var_city,$var_password,$res_edit_id)
+
+    /* ========================================================
+       UPDATE USER
+       ======================================================== */
+
+    function update_user_record(
+        $var_full_name,
+        $var_r_email_id,
+        $var_mobile_no,
+        $var_dob,
+        $var_gender,
+        $var_country,
+        $var_state,
+        $var_city,
+        $var_password,
+        $res_edit_id
+    )
     {
         $current_date = date("Y-m-d");
         $current_time = date("H:i:s t");
 
-        if ($stmt = $this->con->prepare("UPDATE `users_data` SET `full_name`=?,`email_id`=?,`mobile_no`=?,`dob`=?,`gender`=?,`country`=?,`state`=?,`city`=?,`password`=?,`reg_date`=?,`reg_time`=? WHERE `id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "UPDATE `users_data`
+                 SET `full_name`=?,
+                     `email_id`=?,
+                     `mobile_no`=?,
+                     `dob`=?,
+                     `gender`=?,
+                     `country`=?,
+                     `state`=?,
+                     `city`=?,
+                     `password`=?,
+                     `reg_date`=?,
+                     `reg_time`=?
+                 WHERE `id`=?"
+            )
+        )
         {
-            $stmt->bind_param("sssssssssssi",$var_full_name,$var_r_email_id,$var_mobile_no,$var_dob,$var_gender,$var_country,$var_state,$var_city,$var_password,$current_date,$current_time,$res_edit_id);
+            $stmt->bind_param(
+                "sssssssssssi",
+                $var_full_name,
+                $var_r_email_id,
+                $var_mobile_no,
+                $var_dob,
+                $var_gender,
+                $var_country,
+                $var_state,
+                $var_city,
+                $var_password,
+                $current_date,
+                $current_time,
+                $res_edit_id
+            );
 
-            if ($stmt->execute())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return $stmt->execute();
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       LOGIN AUTHENTICATION
+       ======================================================== */
+
     function login_authentication($var_email_id)
     {
-        if ($stmt = $this->con->prepare("Select `password` from `users_data` where `email_id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `password`
+                 FROM `users_data`
+                 WHERE `email_id`=?"
+            )
+        )
         {
-            $stmt->bind_param("s",$var_email_id);
+            $stmt->bind_param("s", $var_email_id);
             $stmt->bind_result($res_password);
 
             if ($stmt->execute())
@@ -165,20 +303,30 @@ class class_functions
                 {
                     return $res_password;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return false;
             }
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       GET MOBILE NUMBER
+       ======================================================== */
+
     function get_mobile_no($var_email_id)
     {
-        if ($stmt = $this->con->prepare("Select `mobile_no` from `users_data` where `email_id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `mobile_no`
+                 FROM `users_data`
+                 WHERE `email_id`=?"
+            )
+        )
         {
-            $stmt->bind_param("s",$var_email_id);
+            $stmt->bind_param("s", $var_email_id);
             $stmt->bind_result($res_mobile_no);
 
             if ($stmt->execute())
@@ -187,22 +335,41 @@ class class_functions
                 {
                     return $res_mobile_no;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return false;
             }
         }
+
         return false;
     }
 
-    function store_job_details($job_name,$company_name,$workplace_type,$country,$state,$city,$salary,$more_details,$contact_no)
+
+    /* ========================================================
+       STORE JOB DETAILS
+       ======================================================== */
+
+    function store_job_details(
+        $job_name,
+        $company_name,
+        $workplace_type,
+        $country,
+        $state,
+        $city,
+        $salary,
+        $more_details,
+        $contact_no
+    )
     {
         $current_date = date("Y-m-d");
         $current_time = date("H:i:s A");
 
-        // duplicate check (prepared statement, no SQL injection)
-        if ($chk = $this->con->prepare("SELECT `j_id` FROM `job_details` WHERE `job_name`=? AND `company_name`=?"))
+        if (
+            $chk = $this->con->prepare(
+                "SELECT `j_id`
+                 FROM `job_details`
+                 WHERE `job_name`=? AND `company_name`=?"
+            )
+        )
         {
             $chk->bind_param("ss", $job_name, $company_name);
             $chk->execute();
@@ -211,35 +378,89 @@ class class_functions
             if ($chk->num_rows > 0)
             {
                 $chk->close();
+
                 $_SESSION['flag1'] = 1;
+
                 return false;
             }
+
             $chk->close();
         }
 
-        if ($stmt = $this->con->prepare("INSERT INTO `job_details`(`job_name`, `company_name`, `workplace_type`, `country`, `state`, `city`,`salary`,`more_details`, `contact_no`, `pst_date`,`pst_time`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"))
+
+        if (
+            $stmt = $this->con->prepare(
+                "INSERT INTO `job_details`
+                (`job_name`,`company_name`,`workplace_type`,
+                 `country`,`state`,`city`,`salary`,`more_details`,
+                 `contact_no`,`pst_date`,`pst_time`)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+            )
+        )
         {
-            $stmt->bind_param("sssssssssss",$job_name,$company_name,$workplace_type,$country,$state,$city,$salary,$more_details,$contact_no,$current_date,$current_time);
+            $stmt->bind_param(
+                "sssssssssss",
+                $job_name,
+                $company_name,
+                $workplace_type,
+                $country,
+                $state,
+                $city,
+                $salary,
+                $more_details,
+                $contact_no,
+                $current_date,
+                $current_time
+            );
 
             if ($stmt->execute())
             {
                 $_SESSION['flag1'] = 2;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
+
         return false;
     }
 
-    function get_all_job_details_based_on_city($var_country,$var_state,$var_city)
+
+    /* ========================================================
+       GET JOBS BY CITY
+       ======================================================== */
+
+    function get_all_job_details_based_on_city(
+        $var_country,
+        $var_state,
+        $var_city
+    )
     {
-        if ($stmt = $this->con->prepare("Select `job_name`,`company_name`,`workplace_type`,`salary`,`more_details`,`contact_no`,`pst_date` from `job_details` where `country`=? and `state`=? and `city`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `job_name`,`company_name`,`workplace_type`,
+                        `salary`,`more_details`,`contact_no`,`pst_date`
+                 FROM `job_details`
+                 WHERE `country`=? AND `state`=? AND `city`=?"
+            )
+        )
         {
-            $stmt->bind_param("sss",$var_country,$var_state,$var_city);
-            $stmt->bind_result($job_name,$company_name,$workplace_type,$salary,$more_details,$contact_no,$pst_date);
+            $stmt->bind_param(
+                "sss",
+                $var_country,
+                $var_state,
+                $var_city
+            );
+
+            $stmt->bind_result(
+                $job_name,
+                $company_name,
+                $workplace_type,
+                $salary,
+                $more_details,
+                $contact_no,
+                $pst_date
+            );
 
             if ($stmt->execute())
             {
@@ -261,24 +482,40 @@ class class_functions
                     $counter++;
                 }
 
-                if (!empty($data))
-                {
-                    return $data;
-                }
-                else
-                {
-                    return false;
-                }
+                return !empty($data) ? $data : false;
             }
         }
+
         return false;
     }
+
+
+    /* ========================================================
+       GET ALL JOB DETAILS
+       ======================================================== */
 
     function get_all_job_details()
     {
-        if ($stmt = $this->con->prepare("SELECT `job_name`, `company_name`, `workplace_type`, `state`, `city`, `salary`, `more_details`, `contact_no`, `pst_date` FROM `job_details`"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `job_name`,`company_name`,`workplace_type`,
+                        `state`,`city`,`salary`,`more_details`,
+                        `contact_no`,`pst_date`
+                 FROM `job_details`"
+            )
+        )
         {
-            $stmt->bind_result($job_name,$company_name,$workplace_type,$var_state,$var_city,$salary,$more_details,$contact_no,$pst_date);
+            $stmt->bind_result(
+                $job_name,
+                $company_name,
+                $workplace_type,
+                $var_state,
+                $var_city,
+                $salary,
+                $more_details,
+                $contact_no,
+                $pst_date
+            );
 
             if ($stmt->execute())
             {
@@ -300,24 +537,45 @@ class class_functions
                     $counter++;
                 }
 
-                if (!empty($data))
-                {
-                    return $data;
-                }
-                else
-                {
-                    return false;
-                }
+                return !empty($data) ? $data : false;
             }
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       GET JOB DETAILS
+       ======================================================== */
+
     function get_jobs_details()
     {
-        if ($stmt = $this->con->prepare("Select `j_id`,`job_name`,`company_name`,`workplace_type`,`country`,`state`,`city`,`salary`,`more_details`,`contact_no`, `category`, `pst_date`,`pst_time` from `job_details`"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `j_id`,`job_name`,`company_name`,
+                        `workplace_type`,`country`,`state`,`city`,
+                        `salary`,`more_details`,`contact_no`,
+                        `category`,`pst_date`,`pst_time`
+                 FROM `job_details`"
+            )
+        )
         {
-            $stmt->bind_result($res_j_id,$res_job_name,$res_company_name,$res_workplace_type,$res_country_name,$res_state,$res_city,$res_salary,$res_more_details,$res_contact_no,$res_category,$res_j_date,$res_j_time);
+            $stmt->bind_result(
+                $res_j_id,
+                $res_job_name,
+                $res_company_name,
+                $res_workplace_type,
+                $res_country_name,
+                $res_state,
+                $res_city,
+                $res_salary,
+                $res_more_details,
+                $res_contact_no,
+                $res_category,
+                $res_j_date,
+                $res_j_time
+            );
 
             if ($stmt->execute())
             {
@@ -343,25 +601,43 @@ class class_functions
                     $counter++;
                 }
 
-                if (!empty($data))
-                {
-                    return $data;
-                }
-                else
-                {
-                    return false;
-                }
+                return !empty($data) ? $data : false;
             }
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       GET JOBS BY CATEGORY
+       ======================================================== */
+
     function get_all_job_details_based_on_category($category)
     {
-        if ($stmt = $this->con->prepare("SELECT `job_name`, `company_name`, `workplace_type`, `state`, `city`, `salary`, `more_details`, `contact_no`, `pst_date` FROM `job_details` WHERE `category`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `job_name`,`company_name`,`workplace_type`,
+                        `state`,`city`,`salary`,`more_details`,
+                        `contact_no`,`pst_date`
+                 FROM `job_details`
+                 WHERE `category`=?"
+            )
+        )
         {
-            $stmt->bind_param("s",$category);
-            $stmt->bind_result($job_name,$company_name,$workplace_type,$var_state,$var_city,$salary,$more_details,$contact_no,$pst_date);
+            $stmt->bind_param("s", $category);
+
+            $stmt->bind_result(
+                $job_name,
+                $company_name,
+                $workplace_type,
+                $var_state,
+                $var_city,
+                $salary,
+                $more_details,
+                $contact_no,
+                $pst_date
+            );
 
             if ($stmt->execute())
             {
@@ -383,46 +659,86 @@ class class_functions
                     $counter++;
                 }
 
-                if (!empty($data))
-                {
-                    return $data;
-                }
-                else
-                {
-                    return false;
-                }
+                return !empty($data) ? $data : false;
             }
         }
+
         return false;
     }
 
-    function store_contact_us_details($f_name, $l_name, $cnt_email_id, $cnt_mobile_no, $report_msg)
+
+    /* ========================================================
+       STORE CONTACT US DETAILS
+       ======================================================== */
+
+    function store_contact_us_details(
+        $f_name,
+        $l_name,
+        $cnt_email_id,
+        $cnt_mobile_no,
+        $report_msg
+    )
     {
         $current_date = date("Y-m-d");
         $current_time = date("H:i:s t");
 
-        if ($stmt = $this->con->prepare("INSERT INTO `contact_us_data`(`f_name`, `l_name`, `cnt_email_id`, `cnt_mobile_no`, `report_msg`, `rpt_date`, `rpt_time`) VALUES (?,?,?,?,?,?,?)"))
+        if (
+            $stmt = $this->con->prepare(
+                "INSERT INTO `contact_us_data`
+                (`f_name`,`l_name`,`cnt_email_id`,`cnt_mobile_no`,
+                 `report_msg`,`rpt_date`,`rpt_time`)
+                VALUES (?,?,?,?,?,?,?)"
+            )
+        )
         {
-            $stmt->bind_param("sssssss",$f_name, $l_name, $cnt_email_id, $cnt_mobile_no, $report_msg,$current_date,$current_time);
+            $stmt->bind_param(
+                "sssssss",
+                $f_name,
+                $l_name,
+                $cnt_email_id,
+                $cnt_mobile_no,
+                $report_msg,
+                $current_date,
+                $current_time
+            );
 
             if ($stmt->execute())
             {
                 $_SESSION['flag2'] = 1;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       GET CONTACT DETAILS
+       ======================================================== */
+
     function get_contact_us_details()
     {
-        if ($stmt = $this->con->prepare("SELECT `c_id`, `f_name`, `l_name`, `cnt_email_id`, `cnt_mobile_no`, `report_msg`, `rpt_date`, `rpt_time` FROM `contact_us_data`"))
+        if (
+            $stmt = $this->con->prepare(
+                "SELECT `c_id`,`f_name`,`l_name`,`cnt_email_id`,
+                        `cnt_mobile_no`,`report_msg`,`rpt_date`,`rpt_time`
+                 FROM `contact_us_data`"
+            )
+        )
         {
-            $stmt->bind_result($c_id,$f_name, $l_name, $cnt_email_id, $cnt_mobile_no, $report_msg,$current_date,$current_time);
+            $stmt->bind_result(
+                $c_id,
+                $f_name,
+                $l_name,
+                $cnt_email_id,
+                $cnt_mobile_no,
+                $report_msg,
+                $current_date,
+                $current_time
+            );
 
             if ($stmt->execute())
             {
@@ -443,73 +759,115 @@ class class_functions
                     $counter++;
                 }
 
-                if (!empty($data))
-                {
-                    return $data;
-                }
-                else
-                {
-                    return false;
-                }
+                return !empty($data) ? $data : false;
             }
         }
+
         return false;
     }
+
+
+    /* ========================================================
+       DELETE JOB
+       ======================================================== */
 
     function delete_job_details($del_id1)
     {
-        if ($stmt = $this->con->prepare("DELETE FROM `job_details` WHERE `j_id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "DELETE FROM `job_details`
+                 WHERE `j_id`=?"
+            )
+        )
         {
-            $stmt->bind_param("i",$del_id1);
+            $stmt->bind_param("i", $del_id1);
 
-            if ($stmt->execute())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return $stmt->execute();
         }
+
         return false;
     }
 
-    function update_job_details($job_name,$company_name,$workplace_type,$country,$state,$city,$salary,$more_details,$contact_no,$job_edit_id)
+
+    /* ========================================================
+       UPDATE JOB
+       ======================================================== */
+
+    function update_job_details(
+        $job_name,
+        $company_name,
+        $workplace_type,
+        $country,
+        $state,
+        $city,
+        $salary,
+        $more_details,
+        $contact_no,
+        $job_edit_id
+    )
     {
         $current_date = date("Y-m-d");
         $current_time = date("H:i:s t");
 
-        if ($stmt = $this->con->prepare("UPDATE `job_details` SET `job_name`=?,`company_name`=?,`workplace_type`=?,`country`=?,`state`=?,`city`=?,`salary`=?,`more_details`=?,`contact_no`=?,`pst_date`=?,`pst_time`=? WHERE `j_id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "UPDATE `job_details`
+                 SET `job_name`=?,
+                     `company_name`=?,
+                     `workplace_type`=?,
+                     `country`=?,
+                     `state`=?,
+                     `city`=?,
+                     `salary`=?,
+                     `more_details`=?,
+                     `contact_no`=?,
+                     `pst_date`=?,
+                     `pst_time`=?
+                 WHERE `j_id`=?"
+            )
+        )
         {
-            $stmt->bind_param("sssssssssssi",$job_name,$company_name,$workplace_type,$country,$state,$city,$salary,$more_details,$contact_no,$current_date,$current_time,$job_edit_id);
+            $stmt->bind_param(
+                "sssssssssssi",
+                $job_name,
+                $company_name,
+                $workplace_type,
+                $country,
+                $state,
+                $city,
+                $salary,
+                $more_details,
+                $contact_no,
+                $current_date,
+                $current_time,
+                $job_edit_id
+            );
 
-            if ($stmt->execute())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return $stmt->execute();
         }
+
         return false;
     }
 
+
+    /* ========================================================
+       DELETE CONTACT REPORT
+       ======================================================== */
+
     function delete_report($del_id2)
     {
-        if ($stmt = $this->con->prepare("DELETE FROM `contact_us_data` WHERE `c_id`=?"))
+        if (
+            $stmt = $this->con->prepare(
+                "DELETE FROM `contact_us_data`
+                 WHERE `c_id`=?"
+            )
+        )
         {
-            $stmt->bind_param("i",$del_id2);
+            $stmt->bind_param("i", $del_id2);
 
-            if ($stmt->execute())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return $stmt->execute();
         }
+
         return false;
     }
 }
